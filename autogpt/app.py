@@ -3,7 +3,31 @@ import json
 from typing import Dict, List, NoReturn, Union
 
 from autogpt.agent.agent_manager import AgentManager
+<<<<<<< Updated upstream
 from autogpt.commands.command import CommandRegistry, command
+=======
+from autogpt.commands.analyze_code import analyze_code
+from autogpt.commands.audio_text import read_audio_from_file
+from autogpt.commands.execute_code import (
+    execute_python_file,
+    execute_shell,
+    execute_shell_popen,
+)
+from autogpt.commands.file_operations import (
+    append_to_file,
+    delete_file,
+    download_file,
+    read_file,
+    search_files,
+    write_to_file,
+)
+from autogpt.commands.git_operations import clone_repository
+from autogpt.commands.google_search import google_official_search, google_search
+from autogpt.commands.image_gen import generate_image
+from autogpt.commands.improve_code import improve_code
+from autogpt.commands.twitter import send_tweet
+from autogpt.commands.reddit import reddit_post
+>>>>>>> Stashed changes
 from autogpt.commands.web_requests import scrape_links, scrape_text
 from autogpt.config import Config
 from autogpt.memory import get_memory
@@ -118,7 +142,47 @@ def execute_command(
 
         # TODO: Change these to take in a file rather than pasted code, if
         # non-file is given, return instructions "Input should be a python
+<<<<<<< Updated upstream
         # filepath, write your code to file and try again
+=======
+        # filepath, write your code to file and try again"
+        elif command_name == "analyze_code":
+            return analyze_code(arguments["code"])
+        elif command_name == "improve_code":
+            return improve_code(arguments["suggestions"], arguments["code"])
+        elif command_name == "write_tests":
+            return write_tests(arguments["code"], arguments.get("focus"))
+        elif command_name == "execute_python_file":  # Add this command
+            return execute_python_file(arguments["file"])
+        elif command_name == "execute_shell":
+            if CFG.execute_local_commands:
+                return execute_shell(arguments["command_line"])
+            else:
+                return (
+                    "You are not allowed to run local shell commands. To execute"
+                    " shell commands, EXECUTE_LOCAL_COMMANDS must be set to 'True' "
+                    "in your config. Do not attempt to bypass the restriction."
+                )
+        elif command_name == "execute_shell_popen":
+            if CFG.execute_local_commands:
+                return execute_shell_popen(arguments["command_line"])
+            else:
+                return (
+                    "You are not allowed to run local shell commands. To execute"
+                    " shell commands, EXECUTE_LOCAL_COMMANDS must be set to 'True' "
+                    "in your config. Do not attempt to bypass the restriction."
+                )
+        elif command_name == "read_audio_from_file":
+            return read_audio_from_file(arguments["file"])
+        elif command_name == "generate_image":
+            return generate_image(arguments["prompt"])
+        elif command_name == "send_tweet":
+            return send_tweet(arguments["text"])
+        elif command_name == "reddit_post":
+            return reddit_post(arguments["post_title"], arguments["post_text"],arguments["subreddit"])
+        elif command_name == "do_nothing":
+            return "No action performed."
+>>>>>>> Stashed changes
         elif command_name == "task_complete":
             shutdown()
         else:
